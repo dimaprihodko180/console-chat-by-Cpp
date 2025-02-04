@@ -1,0 +1,3 @@
+P:/1.From Git/SkillfactoryCpp/Console chat/cmake-build-debug/CMakeFiles/untitled.dir
+P:/1.From Git/SkillfactoryCpp/Console chat/cmake-build-debug/CMakeFiles/edit_cache.dir
+P:/1.From Git/SkillfactoryCpp/Console chat/cmake-build-debug/CMakeFiles/rebuild_cache.dir
