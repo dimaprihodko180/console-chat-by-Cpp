@@ -1,29 +1,28 @@
 #pragma once
+
 #include <string>
-#include <iostream>
-using namespace std;
-class User {
-	const string _login;
-	string _password;
-	string _name;
 
-public:
-	User(const string& login, const string& password, const string& name, double& time);
+namespace ChatApp
+    {
+        class User
+            {
+            private:
+                const std::string _login;
+                std::string _password;
+                std::string _name;
 
-	const string& GetUserLogin()const;
+            public:
+                User(const std::string &login, const std::string &password,
+                     const std::string &name);
 
-	const string& GetUserPassword()const;
+                const std::string &GetUserLogin() const;
 
-	void SetUserPassword(const string& password);
-	
-	const string& GetUserName()const;
-	
-	void SetUserName(const string& name);
+                const std::string &GetUserPassword() const;
 
-	template<typename T> auto ShowUserData() -> decltype (_name, _password)//пример использования шаблонной функции, будет использована позже
-	{
-		return _name;
-		return _password;
-	}
-};
+                void SetUserPassword(const std::string &password);
 
+                const std::string &GetUserName() const;
+
+                void SetUserName(const std::string &name);
+            };
+    }

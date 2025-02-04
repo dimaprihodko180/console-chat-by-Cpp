@@ -1,18 +1,22 @@
 #pragma once
-#include "../User/User.h"
+#include <string>
 
-class Message
+namespace ChatApp
     {
-        const string _from;
-        const string _to;
-        const string _text;
+        class Message
+            {
+            private:
+                std::string _from;
+                std::string _to;
+                std::string _text;
 
-    public:
-        Message(const string &from, const string to, const string text);
+            public:
+                Message(const std::string &from, const std::string &to, const std::string &text);
 
-        const string &GetFrom() const;
+                const std::string &GetFrom() const;
 
-        const string &GetTo() const;
+                const std::string &GetTo() const;
 
-        const string &GetText() const;
-    };
+                const std::string &GetText() const;
+            };
+    }

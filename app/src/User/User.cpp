@@ -1,29 +1,32 @@
 #include "User.h"
 
-User::User(const string& login, const string& password, const string& name, double& time) :_login(login), _password(password), _name(name) {}
+namespace ChatApp
+    {
+        User::User(const std::string &login, const std::string &password, const std::string &name)
+            : _login(login), _password(password), _name(name) {}
 
-const string& User::GetUserLogin()const
-{
+        const std::string &User::GetUserLogin() const
+            {
+                return _login;
+            }
 
-	return _login;
-}
+        const std::string &User::GetUserPassword() const
+            {
+                return _password;
+            }
 
-const string& User::GetUserPassword()const 
-{
-	return _password;
-}
+        void User::SetUserPassword(const std::string &password)
+            {
+                _password = password;
+            }
 
-void User::SetUserPassword(const string& password)
-{
-	_password = password;
-}
+        const std::string &User::GetUserName() const
+            {
+                return _name;
+            }
 
-const string& User::GetUserName()const
-{
-	return _name;
-}
-
-void User::SetUserName(const string& name)
-{
-	_name = name;
-}
+        void User::SetUserName(const std::string &name)
+            {
+                _name = name;
+            }
+    }

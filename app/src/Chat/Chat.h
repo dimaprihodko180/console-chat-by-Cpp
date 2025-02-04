@@ -1,73 +1,55 @@
 #pragma once
+
 #include <vector>
-#include <exception>
 #include <memory>
+#include <exception>
+#include <string>
 #include "../Message/Message.h"
+#include "../User/User.h"
 
-class UserLoginExp : public exception
-        //наследование от класса exeption для последующей обработки исключений
-    {
+namespace ChatApp {
+
+    // Кастомные исключения
+    class UserLoginException : public std::exception {
     public:
-        const char *what() const noexcept override
-            {
-                return " Ошибка: логин пользователя занят ";
-            }
+        const char* what() const noexcept override {
+            return "Ошибка: логин пользователя занят.";
+        }
     };
 
-class UserNameExp : public exception
-    {
+    class UserNameException : public std::exception {
     public:
-        const char *what() const noexcept override
-            {
-                return " Ошибка: имя пользователя занято ";
-            }
+        const char* what() const noexcept override {
+            return "Ошибка: имя пользователя занято.";
+        }
     };
 
-class Chat
-    {
-        bool _chatWorkCheck = false; //переменная, отвечающая за работу чата
-        vector<User> _userList; //создаем вектор, который хранит пользователей чата
-        vector<Message> _messageList; //создаем вектор, который хранит сообщения в чате
-        shared_ptr<User> _currentUser = nullptr; //указатель на текущего пользователя
+    class Chat {
+    private:
+        bool _isActive = false;
+        std::vector<User> _users;
+        std::vector<Message> _messages;
+        std::shared_ptr<User> _currentUser = nullptr;
 
-        void Login();
-
-        void SignUp();
-
-        void ShowChat() const;
-
-        void ShowAllUsersName() const;
-
-        void AddMessage();
-
-        vector<User> &GetAllUsers()
-            {
-                return _userList;
-            }
-
-        vector<Message> &GetAllMessages()
-            {
-                return _messageList;
-            }
-
-        shared_ptr<User> GetUserByLogin(const string &login) const;
-
-        shared_ptr<User> GetUserByName(const string &name) const;
+        // Вспомогательные методы
+        void login();
+        void signUp();
+        void displayChat() const;
+        void displayAllUserNames() const;
+        void addMessage();
+        std::shared_ptr<User> findUserByLogin(const std::string &login) const;
+        std::shared_ptr<User> findUserByName(const std::string &name) const;
 
     public:
+        Chat() = default;
+        ~Chat() = default;
+
+        // Интерфейс для работы с чатом
         void Start();
-
-        bool ChatWorkCheck() const
-            {
-                return _chatWorkCheck;
-            }
-
-        shared_ptr<User> GetCurrentUser() const
-            {
-                return _currentUser;
-            }
-
-        void ShowLoginMenu();
-
-        void ShowUserMenu();
+        bool ChatIsActive() const { return _isActive; }
+        std::shared_ptr<User> GetCurrentUser() const { return _currentUser; }
+        void displayLoginMenu();
+        void displayUserMenu();
     };
+
+} // namespace ChatApp

@@ -1,210 +1,218 @@
 #include "Chat.h"
-#include<iostream>
-#include <string>
+#include <iostream>
+#include <limits>
 
-void Chat::Start()
+namespace ChatApp
     {
-        _chatWorkCheck = true;
-    }
-
-shared_ptr<User> Chat::GetUserByLogin(const string &login) const //поиск пользователя по логину
-    {
-        for (auto &user: _userList)
+        void Chat::Start()
             {
-                if (login == user.GetUserLogin())
-                    return make_shared<User>(user);
+                _isActive = true;
             }
-        return nullptr;
-    }
 
-shared_ptr<User> Chat::GetUserByName(const string &name) const
-    {
-        for (auto &user: _userList)
+        std::shared_ptr<User> Chat::findUserByLogin(const std::string &login) const
             {
-                if (name == user.GetUserName())
-                    return make_shared<User>(user);
+                for (const auto &user: _users)
+                    {
+                        if (user.GetUserLogin() == login)
+                            return std::make_shared<User>(user);
+                    }
+                return nullptr;
             }
-        return nullptr;
-    }
 
-void Chat::ShowLoginMenu()
-    {
-        _currentUser = nullptr; //присваиваем текущему пользователю nullptr
-        char operation;
-        do
+        std::shared_ptr<User> Chat::findUserByName(const std::string &name) const
             {
-                cout << " (1) Вход в чат " << endl;
-                cout << " (2) Регистрация нового пользователя " << endl;
-                cout << " (0) Выход из чата " << endl;
-                cout << "Выберите действие: ";
-                cin >> operation;
-                switch (operation)
+                for (const auto &user: _users)
                     {
-                        case '1':
-                            Login(); //вход в чат по логину и паролю
-                            break;
-                        case '2':
-                            try
-                                {
-                                    SignUp(); //регистрация нового участника чата
-                                } catch (const exception &e)
-                            //отработка исключений; поиск ошибок при регистрации
-                                {
-                                    cout << e.what() << endl;
-                                }
-                            break;
-                        case '0':
-                            _chatWorkCheck = false;
-                            break;
-                        default:
-                            cout << "Выберите действия 1 или 2. Для выхода нажмите 0" << endl;
-                            break;
+                        if (user.GetUserName() == name)
+                            return std::make_shared<User>(user);
                     }
-            } while (!_currentUser && _chatWorkCheck);
-    }
+                return nullptr;
+            }
 
-void Chat::Login()
-    {
-        string login, password;
-        char operation;
-
-        do
+        void Chat::displayLoginMenu()
             {
-                cout << " Логин: ";
-                cin >> login;
-                cout << " Пароль: ";
-                cin >> password;
-
-                _currentUser = GetUserByLogin(login);
-                //указатель на зарегестрированного пользователя
-                if (_currentUser == nullptr || (password != _currentUser->GetUserPassword()))
-                //при неверных данных nullptr или неверный пароль
+                _currentUser = nullptr;
+                char option = '\0';
+                do
                     {
-                        _currentUser = nullptr;
-                        cout << " Ошибка входа " << endl;
-                        cout << " Нажмите любую клавишу для повторной попытки или 0 для выхода: ";
-                        cin >> operation;
-                        if (operation == '0')
-                            break;
-                    }
-            } while (!_currentUser);
-    }
+                        std::cout <<
+                                "\n(1) Вход в чат\n(2) Регистрация нового пользователя\n(0) Выход из чата\n";
+                        std::cout << "Выберите действие: ";
+                        std::cin >> option;
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-void Chat::ShowChat() const
-    {
-        string from;
-        string to;
-        cout << " ---ЧАТ--- " << endl;
-        for (auto &message: _messageList)
-            {
-                if (_currentUser->GetUserLogin() == message.GetFrom() || _currentUser->
-                    GetUserLogin() == message.GetTo() || message.GetTo() == " всем ")
-                    {
-                        from = (_currentUser->GetUserLogin() == message.GetFrom())
-                                   ? "я"
-                                   : GetUserByLogin(message.GetFrom())->GetUserName();
-                        if (message.GetTo() == " всем ") //отправка всем пользователям чата
+                        switch (option)
                             {
-                                to = "всем";
-                            } else
-                            {
-                                to = (_currentUser->GetUserLogin() == message.GetTo())
-                                         ? "я"
-                                         : GetUserByLogin(message.GetTo())->GetUserName();
+                                case '1':
+                                    login();
+                                    break;
+                                case '2':
+                                    try
+                                        {
+                                            signUp();
+                                        } catch (const std::exception &ex)
+                                        {
+                                            std::cout << ex.what() << std::endl;
+                                        }
+                                    break;
+                                case '0':
+                                    _isActive = false;
+                                    break;
+                                default:
+                                    std::cout << "Выберите 1 или 2. Для выхода нажмите 0.\n";
+                                    break;
                             }
-                        cout << " Вам сообщение от " << from << " для " << to << endl;
-                        cout << " Текст сообщения:" << message.GetText() << endl;
-                    }
+                    } while (!_currentUser && _isActive);
             }
-        cout << "-----------" << endl;
-    }
 
-void Chat::SignUp()
-    {
-        string login, password, name;
-        double time;
-        cout << " Придумайте логин: ";
-        cin >> login;
-        cout << " Придумайте пароль: ";
-        cin >> password;
-        cout << " Ваше имя: ";
-        cin >> name;
-        if (GetUserByLogin(login) || login == "всем")
+        void Chat::login()
             {
-                throw UserLoginExp();
-            }
-        if (GetUserByName(name) || name == "всем")
-            {
-                throw UserNameExp();
-            }
-        User user = User(login, password, name, time); //создание нового пользователя
-        _userList.push_back(user); //добавление пользователя
-        _currentUser = make_shared<User>(user); //создание указателя на текущего пользователя
-    }
+                std::string loginInput, passwordInput;
+                char retryOption = '\0';
 
-void Chat::ShowUserMenu()
-    {
-        char operation;
-        cout << " Привет, " << _currentUser->GetUserName() << endl;
-        while (_currentUser)
-            {
-                cout <<
-                        " Меню: Показать чат (1) | Новое сообщение (2) | Пользователи (3) | Выход (0) "
-                        << endl;
-                cout << endl;
-                cin >> operation;
-                switch (operation)
+                do
                     {
-                        case '1':
-                            ShowChat();
-                            break;
-                        case '2':
-                            AddMessage();
-                            break;
-                        case '3':
-                            ShowAllUsersName();
-                            break;
-                        case'0':
-                            _currentUser = nullptr;
-                            break;
-                        default:
-                            cout << " Пожалуйста выберите из списка " << endl;
-                            break;
+                        std::cout << "Логин: ";
+                        std::cin >> loginInput;
+                        std::cout << "Пароль: ";
+                        std::cin >> passwordInput;
+
+                        _currentUser = findUserByLogin(loginInput);
+                        if (!_currentUser || (passwordInput != _currentUser->GetUserPassword()))
+                            {
+                                _currentUser = nullptr;
+                                std::cout <<
+                                        "Ошибка входа.\nНажмите любую клавишу для повторной попытки или 0 для выхода: ";
+                                std::cin >> retryOption;
+                                if (retryOption == '0')
+                                    break;
+                            }
+                    } while (!_currentUser);
+            }
+
+        void Chat::displayChat() const
+            {
+                std::cout << "\n--- Чат ---\n";
+                for (const auto &message: _messages)
+                    {
+                        if (_currentUser->GetUserLogin() == message.GetFrom() ||
+                            _currentUser->GetUserLogin() == message.GetTo() ||
+                            message.GetTo() == "всем")
+                            {
+                                std::string fromName = (_currentUser->GetUserLogin() == message.
+                                                        GetFrom())
+                                                           ? "я"
+                                                           : findUserByLogin(message.GetFrom())->
+                                                           GetUserName();
+                                std::string toName;
+                                if (message.GetTo() == "всем")
+                                    {
+                                        toName = "всем";
+                                    } else
+                                    {
+                                        toName = (_currentUser->GetUserLogin() == message.GetTo())
+                                                     ? "я"
+                                                     : findUserByLogin(message.GetTo())->
+                                                     GetUserName();
+                                    }
+                                std::cout << "Сообщение от " << fromName << " для " << toName <<
+                                        ":\n"
+                                        << message.GetText() << "\n\n";
+                            }
+                    }
+                std::cout << "------------\n";
+            }
+
+        void Chat::signUp()
+            {
+                std::string login, password, name;
+                std::cout << "Придумайте логин: ";
+                std::cin >> login;
+                std::cout << "Придумайте пароль: ";
+                std::cin >> password;
+                std::cout << "Ваше имя: ";
+                std::cin >> name;
+
+                if (findUserByLogin(login) || login == "всем")
+                    {
+                        throw UserLoginException();
+                    }
+                if (findUserByName(name) || name == "всем")
+                    {
+                        throw UserNameException();
+                    }
+                User newUser(login, password, name);
+                _users.push_back(newUser);
+                _currentUser = std::make_shared<User>(newUser);
+            }
+
+        void Chat::displayUserMenu()
+            {
+                char option = '\0';
+                std::cout << "\nПривет, " << _currentUser->GetUserName() << "!\n";
+                while (_currentUser)
+                    {
+                        std::cout <<
+                                "\nМеню: Показать чат (1) | Новое сообщение (2) | Пользователи (3) | Выход (0)\n";
+                        std::cout << "Выберите действие: ";
+                        std::cin >> option;
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                        switch (option)
+                            {
+                                case '1':
+                                    displayChat();
+                                    break;
+                                case '2':
+                                    addMessage();
+                                    break;
+                                case '3':
+                                    displayAllUserNames();
+                                    break;
+                                case '0':
+                                    _currentUser.reset();
+                                    break;
+                                default:
+                                    std::cout << "Пожалуйста, выберите из списка.\n";
+                                    break;
+                            }
                     }
             }
-    }
 
-void Chat::AddMessage()
-    {
-        string to, text;
-
-        cout << " Для кого: (введите имя или отправьте всем сразу (выберите <<всем>>)";
-        cin >> to;
-        cout << "Текст сообщения: ";
-        cin.ignore();
-        getline(cin, text);
-        if (!(to == "всем" || GetUserByName(to)))
+        void Chat::addMessage()
             {
-                cout << "Ошибка отправки сообщения: не удается найти пользователя " << to << endl;
-                return;
-            }
-        if (to == "всем")
-            _messageList.push_back(Message{_currentUser->GetUserLogin(), " всем ", text});
-        else
-            _messageList.push_back(Message{
-                    _currentUser->GetUserLogin(), GetUserByName(to)->GetUserLogin(), text
-                });
-    }
+                std::string recipient, text;
+                std::cout << "Введите имя получателя или 'всем' для рассылки: ";
+                std::cin >> recipient;
+                std::cout << "Текст сообщения: ";
+                std::cin.ignore();
+                std::getline(std::cin, text);
 
-void Chat::ShowAllUsersName() const
-    {
-        cout << "---Пользователи---" << endl;
-        for (auto &user: _userList)
-            {
-                cout << user.GetUserName();
-                if (_currentUser->GetUserLogin() == user.GetUserLogin())
-                    cout << " (Я) ";
-                cout << endl;
+                if (recipient != "всем" && !findUserByName(recipient))
+                    {
+                        std::cout << "Ошибка: не найден пользователь " << recipient << ".\n";
+                        return;
+                    }
+                if (recipient == "всем")
+                    {
+                        _messages.emplace_back(_currentUser->GetUserLogin(), "всем", text);
+                    } else
+                    {
+                        _messages.emplace_back(_currentUser->GetUserLogin(),
+                                               findUserByName(recipient)->GetUserLogin(), text);
+                    }
             }
-        cout << "-----------" << endl;
+
+        void Chat::displayAllUserNames() const
+            {
+                std::cout << "\n--- Пользователи ---\n";
+                for (const auto &user: _users)
+                    {
+                        std::cout << user.GetUserName();
+                        if (_currentUser->GetUserLogin() == user.GetUserLogin())
+                            std::cout << " (Я)";
+                        std::cout << "\n";
+                    }
+                std::cout << "--------------------\n";
+            }
     }

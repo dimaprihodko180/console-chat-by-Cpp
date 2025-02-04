@@ -1,19 +1,26 @@
 #include <iostream>
-#include "./src/Chat/Chat.h"
-using namespace std;
+#include "src/Chat/Chat.h"
+#include <Windows.h>
 
-int main(int argc, char *argv[])
+int main()
     {
-        setlocale(LC_ALL, "ru_RU.UTF-8");
-        Chat messenger;
-        messenger.Start();
-        while (messenger.ChatWorkCheck())
+        try
             {
-                messenger.ShowLoginMenu();
-                while (messenger.GetCurrentUser())
+                SetConsoleOutputCP(65001);
+
+                ChatApp::Chat messenger;
+                messenger.Start();
+                while (messenger.ChatIsActive())
                     {
-                        messenger.ShowUserMenu();
+                        messenger.displayLoginMenu();
+                        while (messenger.GetCurrentUser())
+                            {
+                                messenger.displayUserMenu();
+                            }
                     }
+            } catch (const std::exception &ex)
+            {
+                std::cerr << "Ошибка: " << ex.what() << std::endl;
             }
         return 0;
     }
