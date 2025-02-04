@@ -1,16 +1,18 @@
 #pragma once
-#include "User.h"
-class Message {
-	const string _from;
-	const string _to;
-	const string _text;
-public:
-	Message(const string& from, const string to, const string text);
+#include "../User/User.h"
 
-	const string& GetFrom()const;
+class Message
+    {
+        const string _from;
+        const string _to;
+        const string _text;
 
-	const string& GetTo()const;
+    public:
+        Message(const string &from, const string to, const string text);
 
-	const string& GetText()const;
-};
+        const string &GetFrom() const;
 
+        const string &GetTo() const;
+
+        const string &GetText() const;
+    };

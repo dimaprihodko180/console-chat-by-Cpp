@@ -9,7 +9,7 @@
 					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.30"
+						"string" : "3.20"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "untitled",
+					"name" : "ConsoleChat",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "untitled::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-untitled-Debug-f3a5bb22200162dad8ab.json",
-					"name" : "untitled",
+					"id" : "ConsoleChat::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ConsoleChat-Debug-973309c45572b0a41267.json",
+					"name" : "ConsoleChat",
 					"projectIndex" : 0
 				}
 			]
