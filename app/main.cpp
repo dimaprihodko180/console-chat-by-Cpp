@@ -6,8 +6,8 @@ int main()
     {
         try
             {
+                SetConsoleCP(65001);
                 SetConsoleOutputCP(65001);
-
                 ChatApp::Chat messenger;
                 messenger.Start();
 
