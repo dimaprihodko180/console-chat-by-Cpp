@@ -1,7 +1,10 @@
 #include "Chat.h"
 #include <iostream>
-#include <limits>
 #include <algorithm>
+#include "./utils/Input.h"
+#include "./utils/Display.h"
+#include "./utils/Time.h"
+#include "./utils/Exceptions.h"
 
 namespace ChatApp
     {
@@ -31,8 +34,7 @@ namespace ChatApp
                         std::cout <<
                                 "\n(1) Вход в чат\n(2) Регистрация нового пользователя\n(0) Выход из чата\n";
                         std::cout << "Выберите действие: ";
-                        std::cin >> option;
-                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        option = InputUtils::ReadOption();
 
                         switch (option)
                             {
@@ -111,7 +113,7 @@ namespace ChatApp
 
         void Chat::displayChat() const
             {
-                std::cout << "\n--- Чат ---\n";
+                DisplayUtils::PrintSeparator("Чат");
                 for (const auto &message: _messages)
                     {
                         if (_currentUser->GetUserLogin() == message.GetFrom() ||
@@ -135,12 +137,13 @@ namespace ChatApp
                                                      : findUserByLogin(message.GetTo())->
                                                      GetUserName();
                                     }
-                                std::cout << "Сообщение от " << fromName << " для " << toName <<
-                                        ":\n"
-                                        << message.GetText() << "\n\n";
+
+                                std::string timestamp = TimeUtils::FormatTimestamp(
+                                    message.GetTimestamp());
+                                DisplayUtils::PrintMessage(fromName, toName, message.GetText(),
+                                                           timestamp);
                             }
                     }
-                std::cout << "------------\n";
             }
 
         void Chat::displayUserMenu()
@@ -152,8 +155,7 @@ namespace ChatApp
                         std::cout <<
                                 "\nМеню: Показать чат (1) | Новое сообщение (2) | Пользователи (3) | Выход (0)\n";
                         std::cout << "Выберите действие: ";
-                        std::cin >> option;
-                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        option = InputUtils::ReadOption();
 
                         switch (option)
                             {
@@ -202,7 +204,7 @@ namespace ChatApp
 
         void Chat::displayAllUserNames() const
             {
-                std::cout << "\n--- Пользователи ---\n";
+                DisplayUtils::PrintSeparator("Пользователи");
                 for (const auto &pair: _usersByLogin)
                     {
                         const auto &user = pair.second;
@@ -211,6 +213,5 @@ namespace ChatApp
                             std::cout << " (Я)";
                         std::cout << "\n";
                     }
-                std::cout << "--------------------\n";
             }
-    }
+    } // namespace ChatApp

@@ -12,4 +12,11 @@ add_executable(
         app/src/Message/Message.h
         app/src/User/User.cpp
         app/src/User/User.h
+        "app/src/Chat/utils/Input.h"
+        "app/src/Chat/utils/Exceptions.h"
+        "app/src/Chat/utils/Time.h"
+        "app/src/Chat/utils/Display.h"
+        "app/src/Chat/utils/Input.cpp"
+        "app/src/Chat/utils/Time.cpp"
+        "app/src/Chat/utils/Display.cpp"
 )

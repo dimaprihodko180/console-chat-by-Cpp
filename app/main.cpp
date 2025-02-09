@@ -1,6 +1,6 @@
 #include <iostream>
-#include "src/Chat/Chat.h"
 #include <Windows.h>
+#include "src/Chat/Chat.h"
 
 int main()
     {

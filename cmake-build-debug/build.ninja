@@ -73,6 +73,24 @@ build CMakeFiles/ConsoleChat.dir/app/src/User/User.cpp.obj: CXX_COMPILER__Consol
   OBJECT_DIR = CMakeFiles\ConsoleChat.dir
   OBJECT_FILE_DIR = CMakeFiles\ConsoleChat.dir\app\src\User
 
+build CMakeFiles/ConsoleChat.dir/app/src/Chat/utils/Input.cpp.obj: CXX_COMPILER__ConsoleChat_unscanned_Debug P$:/1.From$ Git/SkillfactoryCpp/Console$ chat/app/src/Chat/utils/Input.cpp || cmake_object_order_depends_target_ConsoleChat
+  DEP_FILE = CMakeFiles\ConsoleChat.dir\app\src\Chat\utils\Input.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\ConsoleChat.dir
+  OBJECT_FILE_DIR = CMakeFiles\ConsoleChat.dir\app\src\Chat\utils
+
+build CMakeFiles/ConsoleChat.dir/app/src/Chat/utils/Time.cpp.obj: CXX_COMPILER__ConsoleChat_unscanned_Debug P$:/1.From$ Git/SkillfactoryCpp/Console$ chat/app/src/Chat/utils/Time.cpp || cmake_object_order_depends_target_ConsoleChat
+  DEP_FILE = CMakeFiles\ConsoleChat.dir\app\src\Chat\utils\Time.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\ConsoleChat.dir
+  OBJECT_FILE_DIR = CMakeFiles\ConsoleChat.dir\app\src\Chat\utils
+
+build CMakeFiles/ConsoleChat.dir/app/src/Chat/utils/Display.cpp.obj: CXX_COMPILER__ConsoleChat_unscanned_Debug P$:/1.From$ Git/SkillfactoryCpp/Console$ chat/app/src/Chat/utils/Display.cpp || cmake_object_order_depends_target_ConsoleChat
+  DEP_FILE = CMakeFiles\ConsoleChat.dir\app\src\Chat\utils\Display.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\ConsoleChat.dir
+  OBJECT_FILE_DIR = CMakeFiles\ConsoleChat.dir\app\src\Chat\utils
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ConsoleChat
@@ -81,7 +99,7 @@ build CMakeFiles/ConsoleChat.dir/app/src/User/User.cpp.obj: CXX_COMPILER__Consol
 #############################################
 # Link the executable ConsoleChat.exe
 
-build ConsoleChat.exe: CXX_EXECUTABLE_LINKER__ConsoleChat_Debug CMakeFiles/ConsoleChat.dir/app/main.cpp.obj CMakeFiles/ConsoleChat.dir/app/src/Chat/Chat.cpp.obj CMakeFiles/ConsoleChat.dir/app/src/Message/Message.cpp.obj CMakeFiles/ConsoleChat.dir/app/src/User/User.cpp.obj
+build ConsoleChat.exe: CXX_EXECUTABLE_LINKER__ConsoleChat_Debug CMakeFiles/ConsoleChat.dir/app/main.cpp.obj CMakeFiles/ConsoleChat.dir/app/src/Chat/Chat.cpp.obj CMakeFiles/ConsoleChat.dir/app/src/Message/Message.cpp.obj CMakeFiles/ConsoleChat.dir/app/src/User/User.cpp.obj CMakeFiles/ConsoleChat.dir/app/src/Chat/utils/Input.cpp.obj CMakeFiles/ConsoleChat.dir/app/src/Chat/utils/Time.cpp.obj CMakeFiles/ConsoleChat.dir/app/src/Chat/utils/Display.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ConsoleChat.dir
