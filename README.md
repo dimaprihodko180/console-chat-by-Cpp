@@ -60,8 +60,8 @@ ConsoleChat/
 
 1. **Клонируйте репозиторий:**
    ```bash
-   git https://github.com/dimaprihodko180/console-chat-by-Cpp.git
-   cd ConsoleChat
+   git clone https://github.com/dimaprihodko180/console-chat-by-Cpp.git
+   
    ```
 2. **Создайте директорию для сборки и перейдите в неё:**
    ```bash
