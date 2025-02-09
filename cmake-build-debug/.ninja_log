@@ -12,3 +12,17 @@
 1488	1630	7603955958681534	ConsoleChat.exe	c11df1a35a7bc8f
 4	1393	7603956835261591	CMakeFiles/ConsoleChat.dir/app/main.cpp.obj	55bbfe21f2039fb6
 1394	1542	7603956849158126	ConsoleChat.exe	c11df1a35a7bc8f
+22	1267	7607893481260532	CMakeFiles/ConsoleChat.dir/app/src/Chat/Chat.cpp.obj	6a78732f313bec26
+13	1736	7607893481164072	CMakeFiles/ConsoleChat.dir/app/main.cpp.obj	55bbfe21f2039fb6
+1736	2014	7607893498395649	ConsoleChat.exe	c11df1a35a7bc8f
+19	1332	7607923235224383	CMakeFiles/ConsoleChat.dir/app/src/Chat/Chat.cpp.obj	6a78732f313bec26
+4	1829	7607923235081276	CMakeFiles/ConsoleChat.dir/app/main.cpp.obj	55bbfe21f2039fb6
+1829	2058	7607923253323279	ConsoleChat.exe	c11df1a35a7bc8f
+28	1481	7607925174790917	CMakeFiles/ConsoleChat.dir/app/src/Message/Message.cpp.obj	c1ff3ff45379b6ee
+18	2033	7607925174690560	CMakeFiles/ConsoleChat.dir/app/src/Chat/Chat.cpp.obj	6a78732f313bec26
+6	2617	7607925174560851	CMakeFiles/ConsoleChat.dir/app/main.cpp.obj	55bbfe21f2039fb6
+2618	2804	7607925200683805	ConsoleChat.exe	c11df1a35a7bc8f
+30	975	7607928492905934	CMakeFiles/ConsoleChat.dir/app/src/User/User.cpp.obj	dff706c8e88ff221
+20	2042	7607928492805355	CMakeFiles/ConsoleChat.dir/app/src/Chat/Chat.cpp.obj	6a78732f313bec26
+5	2593	7607928492662484	CMakeFiles/ConsoleChat.dir/app/main.cpp.obj	55bbfe21f2039fb6
+2593	2761	7607928518537667	ConsoleChat.exe	c11df1a35a7bc8f

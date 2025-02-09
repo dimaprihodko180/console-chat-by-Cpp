@@ -1,9 +1,11 @@
 #pragma once
 
+#include <string>
+#include <unordered_map>
 #include <vector>
 #include <memory>
 #include <exception>
-#include <string>
+
 #include "../Message/Message.h"
 #include "../User/User.h"
 
@@ -31,7 +33,8 @@ namespace ChatApp
             {
             private:
                 bool _isActive = false;
-                std::vector<User> _users;
+                std::unordered_map<std::string, std::shared_ptr<User> > _usersByLogin;
+                std::unordered_map<std::string, std::shared_ptr<User> > _usersByName;
                 std::vector<Message> _messages;
                 std::shared_ptr<User> _currentUser = nullptr;
 

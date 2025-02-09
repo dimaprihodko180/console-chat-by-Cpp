@@ -1,6 +1,7 @@
 #include "Chat.h"
 #include <iostream>
 #include <limits>
+#include <algorithm>
 
 namespace ChatApp
     {
@@ -11,27 +12,19 @@ namespace ChatApp
 
         std::shared_ptr<User> Chat::findUserByLogin(const std::string &login) const
             {
-                for (const auto &user: _users)
-                    {
-                        if (user.GetUserLogin() == login)
-                            return std::make_shared<User>(user);
-                    }
-                return nullptr;
+                auto it = _usersByLogin.find(login);
+                return (it != _usersByLogin.end()) ? it->second : nullptr;
             }
 
         std::shared_ptr<User> Chat::findUserByName(const std::string &name) const
             {
-                for (const auto &user: _users)
-                    {
-                        if (user.GetUserName() == name)
-                            return std::make_shared<User>(user);
-                    }
-                return nullptr;
+                auto it = _usersByName.find(name);
+                return (it != _usersByName.end()) ? it->second : nullptr;
             }
 
         void Chat::displayLoginMenu()
             {
-                _currentUser = nullptr;
+                _currentUser.reset();
                 char option = '\0';
                 do
                     {
@@ -77,17 +70,43 @@ namespace ChatApp
                         std::cout << "Пароль: ";
                         std::cin >> passwordInput;
 
-                        _currentUser = findUserByLogin(loginInput);
-                        if (!_currentUser || (passwordInput != _currentUser->GetUserPassword()))
+                        auto user = findUserByLogin(loginInput);
+                        if (!user || (passwordInput != user->GetUserPassword()))
                             {
-                                _currentUser = nullptr;
                                 std::cout <<
                                         "Ошибка входа.\nНажмите любую клавишу для повторной попытки или 0 для выхода: ";
                                 std::cin >> retryOption;
                                 if (retryOption == '0')
                                     break;
+                            } else
+                            {
+                                _currentUser = user;
                             }
                     } while (!_currentUser);
+            }
+
+        void Chat::signUp()
+            {
+                std::string login, password, name;
+                std::cout << "Придумайте логин: ";
+                std::cin >> login;
+                std::cout << "Придумайте пароль: ";
+                std::cin >> password;
+                std::cout << "Ваше имя: ";
+                std::cin >> name;
+
+                if (_usersByLogin.find(login) != _usersByLogin.end() || login == "всем")
+                    {
+                        throw UserLoginException();
+                    }
+                if (_usersByName.find(name) != _usersByName.end() || name == "всем")
+                    {
+                        throw UserNameException();
+                    }
+                auto newUser = std::make_shared<User>(login, password, name);
+                _usersByLogin[login] = newUser;
+                _usersByName[name] = newUser;
+                _currentUser = newUser;
             }
 
         void Chat::displayChat() const
@@ -104,6 +123,7 @@ namespace ChatApp
                                                            ? "я"
                                                            : findUserByLogin(message.GetFrom())->
                                                            GetUserName();
+
                                 std::string toName;
                                 if (message.GetTo() == "всем")
                                     {
@@ -121,29 +141,6 @@ namespace ChatApp
                             }
                     }
                 std::cout << "------------\n";
-            }
-
-        void Chat::signUp()
-            {
-                std::string login, password, name;
-                std::cout << "Придумайте логин: ";
-                std::cin >> login;
-                std::cout << "Придумайте пароль: ";
-                std::cin >> password;
-                std::cout << "Ваше имя: ";
-                std::cin >> name;
-
-                if (findUserByLogin(login) || login == "всем")
-                    {
-                        throw UserLoginException();
-                    }
-                if (findUserByName(name) || name == "всем")
-                    {
-                        throw UserNameException();
-                    }
-                User newUser(login, password, name);
-                _users.push_back(newUser);
-                _currentUser = std::make_shared<User>(newUser);
             }
 
         void Chat::displayUserMenu()
@@ -206,10 +203,11 @@ namespace ChatApp
         void Chat::displayAllUserNames() const
             {
                 std::cout << "\n--- Пользователи ---\n";
-                for (const auto &user: _users)
+                for (const auto &pair: _usersByLogin)
                     {
-                        std::cout << user.GetUserName();
-                        if (_currentUser->GetUserLogin() == user.GetUserLogin())
+                        const auto &user = pair.second;
+                        std::cout << user->GetUserName();
+                        if (_currentUser->GetUserLogin() == user->GetUserLogin())
                             std::cout << " (Я)";
                         std::cout << "\n";
                     }

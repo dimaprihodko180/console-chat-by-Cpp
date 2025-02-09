@@ -19,9 +19,9 @@ namespace ChatApp
 
                 const std::string &GetUserPassword() const;
 
-                void SetUserPassword(const std::string &password);
-
                 const std::string &GetUserName() const;
+
+                void SetUserPassword(const std::string &password);
 
                 void SetUserName(const std::string &name);
             };

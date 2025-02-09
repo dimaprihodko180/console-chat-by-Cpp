@@ -15,14 +15,14 @@ namespace ChatApp
                 return _password;
             }
 
-        void User::SetUserPassword(const std::string &password)
-            {
-                _password = password;
-            }
-
         const std::string &User::GetUserName() const
             {
                 return _name;
+            }
+
+        void User::SetUserPassword(const std::string &password)
+            {
+                _password = password;
             }
 
         void User::SetUserName(const std::string &name)

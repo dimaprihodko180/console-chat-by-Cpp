@@ -10,6 +10,7 @@ int main()
 
                 ChatApp::Chat messenger;
                 messenger.Start();
+
                 while (messenger.ChatIsActive())
                     {
                         messenger.displayLoginMenu();
